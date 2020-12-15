@@ -5,9 +5,8 @@
         </div>
 
         <div class="buttons">
-            <button v-if="consulta" v-on:click="procesarConsulta">Consultar Producto</button>
-            <button v-if="venta" v-on:click="procesarVenta">Venta</button>
-            <button v-if="!inicio" v-on:click="procesarInicio">Inicio</button>
+            <button v-on:click="procesarConsulta">Consultar Producto</button>
+            <button v-on:click="procesarVenta">Venta</button>
             <br>
         </div>
     </div>
@@ -21,10 +20,6 @@
         name: "inicio",
         data: function(){
             return{
-                inicio: true,
-                product: false,
-                consulta: true,
-                venta: true
             }
         },
         methods: {

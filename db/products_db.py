@@ -18,6 +18,11 @@ database_products = {
                                 "price":12000,
                                 "stock":10}),
 
+    "123_457": ProductsInDB(**{"bar_code":"123_457",
+                                "name":"Torta",
+                                "price":12000,
+                                "stock":10}),
+
 }
 
 def save_product(product_in_db: ProductsInDB):

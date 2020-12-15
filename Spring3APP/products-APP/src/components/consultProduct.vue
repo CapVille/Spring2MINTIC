@@ -17,8 +17,8 @@
         <div class="result">
             <br>
             <p v-if="hay_datos" >Producto: {{product.name}}</p>
-            <p v-if="hay_datos" >Producto: {{product.price}}</p>
-            <p v-if="hay_datos" >Producto: {{product.stock}}</p>
+            <p v-if="hay_datos" >Precio: {{product.price}}</p>
+            <p v-if="hay_datos" >Stock: {{product.stock}}</p>
         </div>
 
         <div class="consulta">
