@@ -8,7 +8,6 @@ class ProductIn(BaseModel):
 
 
 class ProductOut(BaseModel):
-    bar_code        :   str
     name            :   str
     price           :   int
     stock           :   int
