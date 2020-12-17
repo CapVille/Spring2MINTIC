@@ -16,10 +16,6 @@
                 <input v-model="product.bar_code" type="text" placeholder="">
                 <h2>Cantidad</h2>
                 <input v-model="product.stock" type="text" placeholder="">
-                <h2>Nombre</h2>
-                <input v-model="product.name" type="text" placeholder="">
-                <h2>Precio</h2>
-                <input v-model="product.price" type="text" placeholder="">
                 <br>
                 <button type="submit">Vender</button>
             </form>
@@ -33,14 +29,13 @@
 </template>
 
 <script>
+import axios from 'axios';
     export default {
         name: "venta",
         data: function(){
             return{
                 product: {
                     bar_code: "",
-                    name: "",
-                    price: "",
                     stock: ""
 
                 }
@@ -52,6 +47,16 @@
             },
             procesarVenta: function(){
                 let self = this
+                
+                axios.get("http://127.0.0.1:8000/product/"+self.product.bar_code)
+                    .then((result)=>{
+                        alert(result.data.stock)
+                    })
+                    .catch((error)=>{
+                        self.hay_datos = false
+                        alert("ERROR: " + error.response.status)
+                    })
+
                 axios.put("http://127.0.0.1:8000/product/", self.product, {headers: {}})
                     .then((result)=>{
                         alert("Se actualizo correctamente") 
@@ -60,8 +65,9 @@
                         self.hay_datos = false
                         alert("ERROR: " + error.response.status)
                     })
+                
 
-            }
+            },
         }
     }
 </script>

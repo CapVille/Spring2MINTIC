@@ -6,6 +6,10 @@ class ProductIn(BaseModel):
     price           :   int
     stock           :   int
 
+class ProductIn2(BaseModel):
+    bar_code        :   str
+    stock           :   int
+
 
 class ProductOut(BaseModel):
     name            :   str

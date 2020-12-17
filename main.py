@@ -1,13 +1,14 @@
 from db.products_db import ProductsInDB
-from db.products_db import get_product, update_product, get_all_products, save_product
+from db.products_db import get_product, get_all_products, save_product, database_products
 
-from models.products_models import ProductIn, ProductOut
+from models.products_models import ProductIn, ProductOut, ProductIn2
 
 from fastapi import FastAPI, HTTPException
 
 api = FastAPI()
 
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.encoders import jsonable_encoder
 
 origins = [
     "http://localhost.tiangolo.com", "https://localhost.tiangolo.com",
@@ -46,7 +47,7 @@ async def get_product_bar_code(bar_code: str):
     return ProductOut(**product_in_db.dict())
 
 
-@api.put("/product/")
+@api.put("/product/{bar_code}")
 async def update_product(product_in: ProductIn):
     #Buscar la categoria en la base datos
     product_in_db = get_product(product_in.bar_code)
@@ -61,6 +62,25 @@ async def update_product(product_in: ProductIn):
     #Retornando Respuesta
     return ProductOut(**product_updated.dict())
 
+
+@api.put("/product/")
+async def update_stock_product(product_in: ProductIn2):
+    #Buscar la categoria en la base datos
+    product_in_db = database_products[product_in.bar_code]
+    
+
+    #Comprobar la respuesta
+    if product_in_db == None:
+        raise HTTPException(status_code=404, detail="Producto no encontrado")
+
+
+    #Actualizar product
+    update_data = product_in_db
+    update_data.stock  = product_in.stock
+    updated_product = save_product(update_data)
+    
+    #Retornando Respuesta
+    return ProductOut(**updated_product.dict())
 
 @api.get("/products/")
 async def get_all():
