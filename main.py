@@ -73,11 +73,18 @@ async def update_stock_product(product_in: ProductIn2):
     if product_in_db == None:
         raise HTTPException(status_code=404, detail="Producto no encontrado")
 
+    stockActual = product_in_db.stock
+    stockVenta = product_in.stock
+
+    stockNuevo = stockActual - stockVenta
+
+    if stockNuevo < 0:
+        raise HTTPException(status_code=400, detail="Stock insuficiente")
+
+    product_in_db.stock = stockNuevo
 
     #Actualizar product
-    update_data = product_in_db
-    update_data.stock  = product_in.stock
-    updated_product = save_product(update_data)
+    updated_product = save_product(product_in_db)
     
     #Retornando Respuesta
     return ProductOut(**updated_product.dict())

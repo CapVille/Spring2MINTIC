@@ -48,7 +48,7 @@ import axios from 'axios';
             procesarVenta: function(){
                 let self = this
                 
-                axios.get("http://127.0.0.1:8000/product/"+self.product.bar_code)
+                /*axios.get("http://127.0.0.1:8000/product/"+self.product.bar_code)
                     .then((result)=>{
                         alert(result.data.stock)
                     })
@@ -56,14 +56,14 @@ import axios from 'axios';
                         self.hay_datos = false
                         alert("ERROR: " + error.response.status)
                     })
-
+*/
                 axios.put("http://127.0.0.1:8000/product/", self.product, {headers: {}})
                     .then((result)=>{
                         alert("Se actualizo correctamente") 
                     })
                     .catch((error)=>{
                         self.hay_datos = false
-                        alert("ERROR: " + error.response.status)
+                        alert("ERROR: " + error.response.data.detail)
                     })
                 
 
